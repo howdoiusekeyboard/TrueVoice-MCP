@@ -5,19 +5,19 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { registerTools } from "./tools.js";
 
 const server = new McpServer({
-	name: "truevoice-mcp",
-	version: "1.0.0",
+  name: "truevoice-mcp",
+  version: "1.0.0",
 });
 
 registerTools(server);
 
 async function main() {
-	const transport = new StdioServerTransport();
-	await server.connect(transport);
-	console.error("TrueVoice MCP server running on stdio");
+  const transport = new StdioServerTransport();
+  await server.connect(transport);
+  console.error("TrueVoice MCP server running on stdio");
 }
 
 main().catch((error) => {
-	console.error("Server error:", error);
-	process.exit(1);
+  console.error("Server error:", error);
+  process.exit(1);
 });
