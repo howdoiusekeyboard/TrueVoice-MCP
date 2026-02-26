@@ -178,8 +178,14 @@
     .copy-btn:hover {
       background: color-mix(in srgb, var(--surface) 80%, var(--fg));
     }
-    .code-container:hover .copy-btn {
+    .code-container:hover .copy-btn,
+    .code-container:focus-within .copy-btn,
+    .copy-btn:focus-visible {
       opacity: 1;
+    }
+    .copy-btn:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
     }
     .copy-btn.copied {
       opacity: 1;
@@ -287,7 +293,10 @@
               <p class="desc">
                 MCP server that eliminates AI slop. Based on research from NLP
                 writers and philosophers.
-                <a href="https://arxiv.org/abs/2509.19163" target="_blank"
+                <a
+                  href="https://arxiv.org/abs/2509.19163"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   >arXiv:2509.19163v1</a
                 >
               </p>
@@ -447,18 +456,28 @@
             <a
               href="https://github.com/howdoiusekeyboard/truevoice-mcp"
               target="_blank"
+              rel="noopener noreferrer"
               >GitHub</a
             >
-            <a href="https://arxiv.org/abs/2509.19163" target="_blank"
+            <a
+              href="https://arxiv.org/abs/2509.19163"
+              target="_blank"
+              rel="noopener noreferrer"
               >Research</a
             >
-            <a href="https://truevoice-mcp.vercel.app/api" target="_blank"
+            <a
+              href="https://truevoice-mcp.vercel.app/api"
+              target="_blank"
+              rel="noopener noreferrer"
               >API</a
             >
           </div>
           <div class="footer-credit">
             Created by
-            <a href="https://kushagragolash.tech" target="_blank"
+            <a
+              href="https://kushagragolash.tech"
+              target="_blank"
+              rel="noopener noreferrer"
               >Kushagra Golash</a
             >
           </div>
