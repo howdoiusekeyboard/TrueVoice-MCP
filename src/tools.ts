@@ -2,6 +2,14 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { ANTI_SLOP_RULES } from "./rules.js";
 
+/** Match a phrase in text. Single words use word boundaries to avoid partial matches. */
+function matchesPhrase(textLower: string, phrase: string): boolean {
+  if (phrase.includes(" ")) {
+    return textLower.includes(phrase);
+  }
+  return new RegExp(`\\b${phrase}\\b`).test(textLower);
+}
+
 /**
  * Returns the human writing rules, optionally with context-specific guidance appended.
  */
@@ -64,7 +72,7 @@ export function analyzeSlop(text: string): {
   ];
 
   const foundPhrases = slopPhrases.filter((phrase) =>
-    textLower.includes(phrase)
+    matchesPhrase(textLower, phrase)
   );
   if (foundPhrases.length > 0) {
     findings.push(
@@ -115,7 +123,9 @@ export function analyzeSlop(text: string): {
     "relatively",
     "generally",
   ];
-  const foundHedging = hedgingWords.filter((word) => textLower.includes(word));
+  const foundHedging = hedgingWords.filter((word) =>
+    matchesPhrase(textLower, word)
+  );
   if (foundHedging.length > 2) {
     findings.push(
       `Hedging: Excessive uncertainty language - ${foundHedging.join(", ")}`
@@ -132,7 +142,7 @@ export function analyzeSlop(text: string): {
   ];
 
   const foundComplex = complexityPairs
-    .filter((pair) => textLower.includes(pair.complex))
+    .filter((pair) => matchesPhrase(textLower, pair.complex))
     .map((pair) => `"${pair.complex}" → "${pair.simple}"`);
 
   if (foundComplex.length > 0) {
@@ -154,7 +164,7 @@ export function analyzeSlop(text: string): {
     "notwithstanding",
   ];
   const foundFormal = formalConnectives.filter((word) =>
-    textLower.includes(word)
+    matchesPhrase(textLower, word)
   );
   if (foundFormal.length >= 2) {
     findings.push(
@@ -189,7 +199,7 @@ export function analyzeSlop(text: string): {
     "sometimes",
   ];
   const foundGeneric = genericPhrases.filter((phrase) =>
-    textLower.includes(phrase)
+    matchesPhrase(textLower, phrase)
   );
   if (foundGeneric.length >= 3) {
     findings.push(
