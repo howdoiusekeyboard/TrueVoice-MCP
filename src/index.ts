@@ -15,6 +15,18 @@ async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
   console.error("TrueVoice MCP server running on stdio");
+
+  const shutdown = async () => {
+    try {
+      await server.close();
+    } catch (err) {
+      console.error("Shutdown error:", err);
+      process.exit(1);
+    }
+    process.exit(0);
+  };
+  process.on("SIGINT", shutdown);
+  process.on("SIGTERM", shutdown);
 }
 
 main().catch((error) => {
