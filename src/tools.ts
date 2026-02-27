@@ -2,12 +2,19 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { ANTI_SLOP_RULES } from "./rules.js";
 
+const wordBoundaryCache = new Map<string, RegExp>();
+
 /** Match a phrase in text. Single words use word boundaries to avoid partial matches. */
 function matchesPhrase(textLower: string, phrase: string): boolean {
   if (phrase.includes(" ")) {
     return textLower.includes(phrase);
   }
-  return new RegExp(`\\b${phrase}\\b`).test(textLower);
+  let regex = wordBoundaryCache.get(phrase);
+  if (!regex) {
+    regex = new RegExp(`\\b${phrase}\\b`);
+    wordBoundaryCache.set(phrase, regex);
+  }
+  return regex.test(textLower);
 }
 
 /**

@@ -61,14 +61,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       // Handle the MCP request
       await transport.handleRequest(req, res, req.body);
-    } catch (error: any) {
+    } catch {
       // Only send error response if headers haven't been sent yet
       if (!res.headersSent) {
         res.status(500).json({
           jsonrpc: "2.0",
           error: {
             code: -32_603,
-            message: error.message || "Internal server error",
+            message: "Internal server error",
           },
           id: req.body?.id || null,
         });
