@@ -18,19 +18,30 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
 
   const { text } = req.body;
 
-  if (!text) {
+  if (!text || typeof text !== "string") {
     res.status(400).json({ error: "No text provided for analysis" });
     return;
   }
 
-  const { findings } = analyzeSlop(text);
+  if (text.length > 100_000) {
+    res
+      .status(413)
+      .json({ error: "Text too large. Maximum 100,000 characters." });
+    return;
+  }
 
-  res.status(200).json({
-    hasSlop: findings.length > 0,
-    findings,
-    message:
-      findings.length > 0
-        ? "AI slop detected. Revise the text to sound more human and natural."
-        : "No obvious AI slop detected. Text appears human-like.",
-  });
+  try {
+    const { findings } = analyzeSlop(text);
+
+    res.status(200).json({
+      hasSlop: findings.length > 0,
+      findings,
+      message:
+        findings.length > 0
+          ? "AI slop detected. Revise the text to sound more human and natural."
+          : "No obvious AI slop detected. Text appears human-like.",
+    });
+  } catch {
+    res.status(500).json({ error: "Internal server error" });
+  }
 }
