@@ -26,7 +26,7 @@ Edit `~/Library/Application Support/Claude/claude_desktop_config.json`:
 {
   "mcpServers": {
     "truevoice": {
-      "url": "https://truevoice-mcp.vercel.app/api/mcp"
+      "url": "https://truevoice-mcp.kushagragolash.tech/api/mcp"
     }
   }
 }
@@ -55,7 +55,7 @@ Add to your MCP configuration:
 {
   "mcpServers": {
     "truevoice": {
-      "url": "https://truevoice-mcp.vercel.app/api/mcp"
+      "url": "https://truevoice-mcp.kushagragolash.tech/api/mcp"
     }
   }
 }
@@ -268,12 +268,12 @@ then help me write a thread"
 
 ```bash
 # Check text for slop
-curl -X POST https://truevoice-mcp.vercel.app/api/check \
+curl -X POST https://truevoice-mcp.kushagragolash.tech/api/check \
   -H "Content-Type: application/json" \
   -d '{"text": "Your text here"}'
 
 # Get writing rules
-curl https://truevoice-mcp.vercel.app/api/rules?context=email
+curl https://truevoice-mcp.kushagragolash.tech/api/rules?context=email
 ```
 
 ## Research Foundation
@@ -294,7 +294,7 @@ Full paper: [arXiv:2509.19163](https://arxiv.org/abs/2509.19163)
 ## Documentation
 
 - [Claude Desktop Setup](./CLAUDE_DESKTOP_SETUP.md) - Detailed configuration guide
-- [API Reference](https://truevoice-mcp.vercel.app/api) - REST API endpoints
+- [API Reference](https://truevoice-mcp.kushagragolash.tech/api) - REST API endpoints
 - [MCP Spec](https://spec.modelcontextprotocol.io) - Protocol documentation
 
 ## Contributing
@@ -313,6 +313,6 @@ MIT License - see [LICENSE](./LICENSE) for details
 
 ---
 
-**Live Demo:** [truevoice-mcp.vercel.app](https://truevoice-mcp.vercel.app)
-**MCP Endpoint:** `https://truevoice-mcp.vercel.app/api/mcp`
+**Live Demo:** [truevoice-mcp.kushagragolash.tech](https://truevoice-mcp.kushagragolash.tech)
+**MCP Endpoint:** `https://truevoice-mcp.kushagragolash.tech/api/mcp`
 **GitHub:** [howdoiusekeyboard/truevoice-mcp](https://github.com/howdoiusekeyboard/truevoice-mcp)
