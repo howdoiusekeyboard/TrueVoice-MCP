@@ -70,14 +70,12 @@ export function analyzeSlop(text: string): {
     "game changer",
     "unlock the potential",
     "landscape",
-    "utilize",
     "seamless",
     "ecosystem",
     "journey",
     "revolutionize",
     "transform",
     "empower",
-    "facilitate",
   ];
 
   const foundPhrases = slopPhrases.filter((phrase) =>

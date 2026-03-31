@@ -30,7 +30,7 @@ If you're developing locally, use the absolute path:
     "truevoice": {
       "command": "node",
       "args": [
-        "/Users/howdoiusekeyboard/Documents/GitHub/truevoice-mcp/dist/index.js"
+        "/path/to/truevoice-mcp/dist/index.js"
       ]
     }
   }

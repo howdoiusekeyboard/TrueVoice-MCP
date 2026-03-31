@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/mcp.ts": {
-      "maxDuration": 300
+      "maxDuration": 30
     },
     "api/check.ts": {
       "maxDuration": 30
