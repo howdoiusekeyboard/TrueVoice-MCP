@@ -1,4 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
+import { VERSION } from "../src/tools.js";
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
   // Enable CORS
@@ -15,7 +16,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === "GET") {
     res.status(200).json({
       name: "TrueVoice MCP Server",
-      version: "1.0.0",
+      version: VERSION,
       status: "running",
       description: "Eliminates AI slop based on academic research",
       tools: ["get_human_writing_rules", "check_for_slop", "get_slop_examples"],

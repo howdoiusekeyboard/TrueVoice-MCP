@@ -44,7 +44,7 @@
     "typescript": "^5.9.3",
     "@biomejs/biome": "^2.4.5",
     "ultracite": "^7.2.4",
-"lint-staged": "^16.3.2"
+    "lint-staged": "^16.3.2"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json,jsonc,css,scss,md,mdx}": [

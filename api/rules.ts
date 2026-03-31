@@ -20,5 +20,12 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
   const raw = req.query.context;
   const context = Array.isArray(raw) ? raw[0] : raw;
 
+  if (context && context.length > 500) {
+    res
+      .status(400)
+      .json({ error: "Context parameter too long. Maximum 500 characters." });
+    return;
+  }
+
   res.status(200).send(getHumanWritingRules(context));
 }

@@ -1,12 +1,12 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { registerTools } from "../src/tools.js";
+import { registerTools, VERSION } from "../src/tools.js";
 
 function createServer(): McpServer {
   const server = new McpServer({
     name: "truevoice-mcp",
-    version: "1.0.0",
+    version: VERSION,
   });
 
   registerTools(server);
@@ -61,8 +61,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       // Handle the MCP request
       await transport.handleRequest(req, res, req.body);
-    } catch {
-      // Only send error response if headers haven't been sent yet
+    } catch (error) {
+      console.error("MCP request error:", error);
       if (!res.headersSent) {
         res.status(500).json({
           jsonrpc: "2.0",

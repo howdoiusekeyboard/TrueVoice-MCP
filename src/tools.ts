@@ -2,6 +2,8 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { ANTI_SLOP_RULES } from "./rules.js";
 
+export const VERSION = "1.0.0";
+
 const wordBoundaryCache = new Map<string, RegExp>();
 
 /** Match a phrase in text. Single words use word boundaries to avoid partial matches. */
@@ -313,7 +315,10 @@ export function registerTools(server: McpServer): void {
       description:
         "Analyze text for AI slop indicators across three categories: Information Utility, Style Quality, and Structure. Returns specific patterns to avoid.",
       inputSchema: {
-        text: z.string().describe("The text to analyze for AI slop indicators"),
+        text: z
+          .string()
+          .max(100_000)
+          .describe("The text to analyze for AI slop indicators"),
       },
     },
     async ({ text }) => {
