@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { getSlopExamples } from "../src/tools.js";
+import { getSlopExamples, SLOP_CATEGORIES } from "../src/tools.js";
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -20,10 +20,9 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
   const raw = req.query.category;
   const category = (Array.isArray(raw) ? raw[0] : raw) || "all";
 
-  const validCategories = ["phrases", "structure", "tone", "all"];
-  if (!validCategories.includes(category)) {
+  if (!SLOP_CATEGORIES.includes(category as (typeof SLOP_CATEGORIES)[number])) {
     res.status(400).json({
-      error: `Invalid category "${category}". Must be one of: ${validCategories.join(", ")}`,
+      error: `Invalid category "${category}". Must be one of: ${SLOP_CATEGORIES.join(", ")}`,
     });
     return;
   }

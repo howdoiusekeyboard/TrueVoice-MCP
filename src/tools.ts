@@ -3,6 +3,9 @@ import { z } from "zod";
 import { ANTI_SLOP_RULES } from "./rules.js";
 
 export const VERSION = "1.0.0";
+export const MAX_TEXT_LENGTH = 100_000;
+export const MAX_CONTEXT_LENGTH = 500;
+export const SLOP_CATEGORIES = ["phrases", "structure", "tone", "all"] as const;
 
 const wordBoundaryCache = new Map<string, RegExp>();
 
@@ -293,6 +296,7 @@ export function registerTools(server: McpServer): void {
       inputSchema: {
         context: z
           .string()
+          .max(MAX_CONTEXT_LENGTH)
           .optional()
           .describe(
             "Optional: The context or type of writing (e.g., 'technical documentation', 'casual email', 'blog post')"
@@ -315,7 +319,7 @@ export function registerTools(server: McpServer): void {
       inputSchema: {
         text: z
           .string()
-          .max(100_000)
+          .max(MAX_TEXT_LENGTH)
           .describe("The text to analyze for AI slop indicators"),
       },
     },
@@ -335,7 +339,7 @@ export function registerTools(server: McpServer): void {
         "Get examples of common AI slop phrases and patterns to avoid, categorized by type.",
       inputSchema: {
         category: z
-          .enum(["phrases", "structure", "tone", "all"])
+          .enum(SLOP_CATEGORIES)
           .optional()
           .describe("The category of slop examples to retrieve"),
       },

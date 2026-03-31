@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { analyzeSlop } from "../src/tools.js";
+import { analyzeSlop, MAX_TEXT_LENGTH } from "../src/tools.js";
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -23,7 +23,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
     return;
   }
 
-  if (text.length > 100_000) {
+  if (text.length > MAX_TEXT_LENGTH) {
     res
       .status(413)
       .json({ error: "Text too large. Maximum 100,000 characters." });

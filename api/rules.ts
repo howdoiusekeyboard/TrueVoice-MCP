@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { getHumanWritingRules } from "../src/tools.js";
+import { getHumanWritingRules, MAX_CONTEXT_LENGTH } from "../src/tools.js";
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -20,10 +20,10 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
   const raw = req.query.context;
   const context = Array.isArray(raw) ? raw[0] : raw;
 
-  if (context && context.length > 500) {
-    res
-      .status(400)
-      .json({ error: "Context parameter too long. Maximum 500 characters." });
+  if (context && context.length > MAX_CONTEXT_LENGTH) {
+    res.status(400).json({
+      error: `Context parameter too long. Maximum ${MAX_CONTEXT_LENGTH} characters.`,
+    });
     return;
   }
 
