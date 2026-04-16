@@ -273,6 +273,138 @@
     .footer-credit a:hover {
       color: color-mix(in srgb, var(--accent) 80%, var(--fg));
     }
+
+    /* Tabs */
+    .tab-bar {
+      display: flex;
+      gap: 0.25rem;
+      width: fit-content;
+      padding: 0.25rem;
+      margin-bottom: 1rem;
+      background: var(--surface);
+      border-radius: var(--radius-sm);
+    }
+    .tab-btn {
+      padding: 0.375rem 0.875rem;
+      font-family: inherit;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      border-radius: 0.375rem;
+      transition:
+        color 0.15s,
+        background 0.15s;
+    }
+    .tab-btn:hover {
+      color: var(--fg);
+    }
+    .tab-btn[aria-selected="true"] {
+      color: var(--fg);
+      background: var(--bg);
+    }
+    .tab-panel {
+      display: none;
+    }
+    .tab-panel[aria-hidden="false"] {
+      display: block;
+    }
+
+    /* Install buttons */
+    .install-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+    }
+    @media (max-width: 400px) {
+      .install-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .install-btn {
+      display: flex;
+      gap: 0.625rem;
+      align-items: center;
+      padding: 0.75rem 0.875rem;
+      font-family: inherit;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--fg);
+      text-decoration: none;
+      cursor: pointer;
+      background: color-mix(in srgb, var(--surface) 50%, transparent);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      transition:
+        border-color 0.15s,
+        background 0.15s;
+    }
+    .install-btn:hover {
+      text-decoration: none;
+      background: var(--surface);
+      border-color: color-mix(in srgb, var(--border) 60%, var(--fg));
+    }
+    .install-btn svg {
+      flex-shrink: 0;
+      width: 1.125rem;
+      height: 1.125rem;
+    }
+    .install-btn.copied {
+      border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+    }
+    .install-btn--cursor {
+      border-left: 3px solid #00b4d8;
+    }
+    .install-btn--vscode {
+      border-left: 3px solid #0078d4;
+    }
+    .install-btn--claude {
+      border-left: 3px solid #d97757;
+    }
+
+    /* Claude Desktop walkthrough */
+    .walkthrough {
+      display: none;
+      padding: 0.75rem 1rem;
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      background: color-mix(in srgb, var(--surface) 30%, transparent);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+    .walkthrough.open {
+      display: block;
+    }
+    .walkthrough ol {
+      display: flex;
+      flex-direction: column;
+      gap: 0.375rem;
+      padding-left: 1.25rem;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* Install section utilities */
+    .install-note {
+      margin-top: 0.75rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .link-btn {
+      padding: 0;
+      font: inherit;
+      color: var(--accent);
+      text-decoration: underline;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+    .link-btn:hover {
+      color: color-mix(in srgb, var(--accent) 80%, var(--fg));
+    }
     </style>
   </head>
   <body>
@@ -305,81 +437,200 @@
             <!-- Setup -->
             <div>
               <h2 class="section-title">Setup</h2>
-              <div class="stack-sm">
-                <div class="card code-container">
-                  <div class="code-header">
-                    <h3 class="card-label">Cursor / IDEs</h3>
-                    <button
-                      type="button"
-                      onclick="copyToClipboard('http-code', this)"
-                      class="copy-btn"
+
+              <div class="tab-bar" role="tablist">
+                <button
+                  type="button"
+                  id="tab-quick-install"
+                  class="tab-btn"
+                  role="tab"
+                  aria-selected="true"
+                  aria-controls="quick-install"
+                  data-tab="quick-install"
+                  onclick="switchTab('quick-install')"
+                >
+                  Quick Install
+                </button>
+                <button
+                  type="button"
+                  id="tab-self-host"
+                  class="tab-btn"
+                  role="tab"
+                  aria-selected="false"
+                  aria-controls="self-host"
+                  data-tab="self-host"
+                  onclick="switchTab('self-host')"
+                >
+                  Self-Host
+                </button>
+              </div>
+
+              <!-- Quick Install -->
+              <div
+                id="quick-install"
+                class="tab-panel"
+                role="tabpanel"
+                aria-labelledby="tab-quick-install"
+                aria-hidden="false"
+              >
+                <div class="install-grid">
+                  <a
+                    href="cursor://anysphere.cursor-deeplink/mcp/install?name=TrueVoice&config=eyJ1cmwiOiJodHRwczovL3RydWV2b2ljZS1tY3Aua3VzaGFncmFnb2xhc2gudGVjaC9hcGkvbWNwIn0="
+                    class="install-btn install-btn--cursor"
+                  >
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      aria-hidden="true"
                     >
-                      Copy
-                    </button>
+                      <path
+                        d="M11.503.131 1.891 5.678a.84.84 0 0 0-.42.726v11.188c0 .3.162.575.42.724l9.609 5.55a1 1 0 0 0 .998 0l9.61-5.55a.84.84 0 0 0 .42-.724V6.404a.84.84 0 0 0-.42-.726L12.497.131a1.01 1.01 0 0 0-.996 0M2.657 6.338h18.55c.263 0 .43.287.297.515L12.23 22.918c-.062.107-.229.064-.229-.06V12.335a.59.59 0 0 0-.295-.51l-9.11-5.257c-.109-.063-.064-.23.061-.23"
+                      />
+                    </svg>
+                    <span class="btn-label">Add to Cursor</span>
+                  </a>
+                  <a
+                    href="vscode:mcp/install?%7B%22name%22%3A%22TrueVoice%22%2C%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Ftruevoice-mcp.kushagragolash.tech%2Fapi%2Fmcp%22%7D"
+                    class="install-btn install-btn--vscode"
+                  >
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M23.15 2.587L18.21.21a1.494 1.494 0 0 0-1.705.29l-9.46 8.63-4.12-3.128a.999.999 0 0 0-1.276.057L.327 7.261A1 1 0 0 0 .326 8.74L3.899 12 .326 15.26a1 1 0 0 0 .001 1.479L1.65 17.94a.999.999 0 0 0 1.276.057l4.12-3.128 9.46 8.63a1.492 1.492 0 0 0 1.704.29l4.942-2.377A1.5 1.5 0 0 0 24 20.06V3.939a1.5 1.5 0 0 0-.85-1.352zm-5.146 14.861L10.826 12l7.178-5.448v10.896z"
+                      />
+                    </svg>
+                    <span class="btn-label">Add to VS Code</span>
+                  </a>
+                  <button
+                    type="button"
+                    class="install-btn install-btn--claude"
+                    data-copy="claude mcp add --transport http truevoice https://truevoice-mcp.kushagragolash.tech/api/mcp"
+                    onclick="copyText(this)"
+                  >
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"
+                      />
+                    </svg>
+                    <span class="btn-label">Add to Claude Code</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="install-btn install-btn--claude"
+                    onclick="toggleWalkthrough(this)"
+                    aria-expanded="false"
+                  >
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"
+                      />
+                    </svg>
+                    <span class="btn-label">Add to Claude Desktop</span>
+                  </button>
+                </div>
+
+                <div class="walkthrough" id="desktop-walkthrough">
+                  <ol>
+                    <li>Open Claude Desktop</li>
+                    <li>
+                      Click <strong>+</strong> in the chat bar, then
+                      <strong>Connectors</strong>
+                    </li>
+                    <li>Click <strong>Add custom server</strong></li>
+                    <li>
+                      Paste this URL:<br>
+                      <code class="inline-code"
+                        >https://truevoice-mcp.kushagragolash.tech/api/mcp</code
+                      >
+                    </li>
+                  </ol>
+                </div>
+
+                <p class="install-note">
+                  Using Windsurf, Zed, or another client? See the
+                  <button
+                    type="button"
+                    class="link-btn"
+                    onclick="switchTab('self-host')"
+                  >
+                    Self-Host
+                  </button>
+                  tab for the server URL.
+                </p>
+              </div>
+
+              <!-- Self-Host -->
+              <div
+                id="self-host"
+                class="tab-panel"
+                role="tabpanel"
+                aria-labelledby="tab-self-host"
+                aria-hidden="true"
+              >
+                <div class="stack-sm">
+                  <div class="card code-container">
+                    <div class="code-header">
+                      <h3 class="card-label">Server URL</h3>
+                      <button
+                        type="button"
+                        onclick="copyToClipboard('server-url', this)"
+                        class="copy-btn"
+                      >
+                        Copy
+                      </button>
+                    </div>
+                    <pre
+                      id="server-url"
+                      class="mono"
+                    ><code>https://truevoice-mcp.kushagragolash.tech/api/mcp</code></pre>
                   </div>
-                  <pre id="http-code" class="mono"><code>{
+
+                  <div class="card code-container">
+                    <div class="code-header">
+                      <h3 class="card-label">MCP Configuration</h3>
+                      <button
+                        type="button"
+                        onclick="copyToClipboard('mcp-config', this)"
+                        class="copy-btn"
+                      >
+                        Copy
+                      </button>
+                    </div>
+                    <pre id="mcp-config" class="mono"><code>{
   "mcpServers": {
     "truevoice": {
       "url": "https://truevoice-mcp.kushagragolash.tech/api/mcp"
     }
   }
 }</code></pre>
-                </div>
-
-                <div class="card">
-                  <h3 class="card-label" style="margin-bottom: 0.75rem;">
-                    Claude Desktop
-                  </h3>
-                  <div
-                    class="steps"
-                    style="font-size: 0.75rem; color: var(--muted);"
-                  >
-                    <div>
-                      <p class="step-label">1. Clone the repository:</p>
-                      <code class="inline-code"
-                        >git clone
-                        https://github.com/howdoiusekeyboard/truevoice-mcp.git</code
-                      >
-                    </div>
-                    <div>
-                      <p class="step-label">
-                        2. Install dependencies and build:
-                      </p>
-                      <code class="inline-code"
-                        >npm install && npm run build</code
-                      >
-                    </div>
-                    <div>
-                      <p class="step-label">3. Add to Claude Desktop config:</p>
-                      <div class="code-container">
-                        <button
-                          type="button"
-                          onclick="copyToClipboard('stdio-code', this)"
-                          class="copy-btn"
-                          style="position: absolute; top: 0.5rem; right: 0.5rem;"
-                        >
-                          Copy
-                        </button>
-                        <pre
-                          id="stdio-code"
-                          class="mono step-code-block"
-                        ><code>{
-  "mcpServers": {
-    "truevoice": {
-      "command": "node",
-      "args": ["/path/to/truevoice-mcp/dist/index.js"]
-    }
-  }
-}</code></pre>
-                      </div>
-                    </div>
-                    <p>4. Restart Claude Desktop</p>
                   </div>
-                </div>
 
-                <div class="card">
-                  <h3 class="card-label">Restart after config</h3>
-                  <p class="card-text">Tools available after restart</p>
+                  <div class="card">
+                    <h3 class="card-label">Local Development</h3>
+                    <p class="card-text">
+                      For stdio transport and self-hosting, see the project
+                      README.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -507,6 +758,66 @@
         .catch((err) => {
           console.error("Failed to copy:", err);
         });
+    }
+
+    // biome-ignore lint/correctness/noUnusedVariables: called via onclick attributes
+    function switchTab(tabId) {
+      for (const btn of document.querySelectorAll(".tab-btn")) {
+        btn.setAttribute(
+          "aria-selected",
+          btn.dataset.tab === tabId ? "true" : "false"
+        );
+      }
+      for (const panel of document.querySelectorAll(".tab-panel")) {
+        panel.setAttribute(
+          "aria-hidden",
+          panel.id === tabId ? "false" : "true"
+        );
+      }
+    }
+
+    // biome-ignore lint/correctness/noUnusedVariables: called via onclick attributes
+    function copyText(button) {
+      navigator.clipboard
+        .writeText(button.dataset.copy)
+        .then(() => {
+          const label = button.querySelector(".btn-label");
+          const original = label.textContent;
+          label.textContent = "Copied!";
+          button.classList.add("copied");
+
+          setTimeout(() => {
+            label.textContent = original;
+            button.classList.remove("copied");
+          }, 2000);
+        })
+        .catch((err) => {
+          console.error("Failed to copy:", err);
+        });
+    }
+
+    // biome-ignore lint/correctness/noUnusedVariables: called via onclick attributes
+    function toggleWalkthrough(button) {
+      const walkthrough = document.getElementById("desktop-walkthrough");
+      const isOpen = walkthrough.classList.toggle("open");
+      button.setAttribute("aria-expanded", isOpen);
+
+      if (isOpen) {
+        navigator.clipboard
+          .writeText("https://truevoice-mcp.kushagragolash.tech/api/mcp")
+          .then(() => {
+            const label = button.querySelector(".btn-label");
+            const original = label.textContent;
+            label.textContent = "URL Copied!";
+
+            setTimeout(() => {
+              label.textContent = original;
+            }, 2000);
+          })
+          .catch((err) => {
+            console.error("Failed to copy:", err);
+          });
+      }
     }
     </script>
   </body>

@@ -18,36 +18,25 @@ Research foundation: [arXiv:2509.19163v1](https://arxiv.org/abs/2509.19163)
 
 ## Quick Start
 
-### Claude Desktop (HTTP Transport)
+### One-Click Install
 
-Edit `~/Library/Application Support/Claude/claude_desktop_config.json`:
+Visit [truevoice-mcp.kushagragolash.tech](https://truevoice-mcp.kushagragolash.tech) for one-click install buttons for Cursor, VS Code, Claude Code, and Claude Desktop.
 
-```json
-{
-  "mcpServers": {
-    "truevoice": {
-      "url": "https://truevoice-mcp.kushagragolash.tech/api/mcp"
-    }
-  }
-}
+### Claude Code
+
+```bash
+claude mcp add --transport http truevoice https://truevoice-mcp.kushagragolash.tech/api/mcp
 ```
 
-### Claude Desktop (Local stdio - Recommended for Development)
+### Claude Desktop
 
-```json
-{
-  "mcpServers": {
-    "truevoice": {
-      "command": "node",
-      "args": [
-        "/path/to/truevoice-mcp/dist/index.js"
-      ]
-    }
-  }
-}
+Open Settings > Connectors > Add custom server, paste:
+
+```
+https://truevoice-mcp.kushagragolash.tech/api/mcp
 ```
 
-### Cursor IDE & Other MCP Clients
+### Any MCP Client
 
 Add to your MCP configuration:
 
@@ -61,7 +50,20 @@ Add to your MCP configuration:
 }
 ```
 
-**Restart your client after configuration!**
+### Local Development (stdio)
+
+```json
+{
+  "mcpServers": {
+    "truevoice": {
+      "command": "node",
+      "args": ["/path/to/truevoice-mcp/dist/index.js"]
+    }
+  }
+}
+```
+
+See [Development](#development) for full local setup.
 
 ## Available Tools
 
@@ -315,4 +317,3 @@ MIT License - see [LICENSE](./LICENSE) for details
 
 **Live Demo:** [truevoice-mcp.kushagragolash.tech](https://truevoice-mcp.kushagragolash.tech)
 **MCP Endpoint:** `https://truevoice-mcp.kushagragolash.tech/api/mcp`
-**GitHub:** [howdoiusekeyboard/truevoice-mcp](https://github.com/howdoiusekeyboard/truevoice-mcp)
