@@ -511,7 +511,7 @@
                   <button
                     type="button"
                     class="install-btn install-btn--claude"
-                    data-copy="claude mcp add --transport http truevoice https://truevoice-mcp.kushagragolash.tech/api/mcp"
+                    data-copy="claude mcp add --transport http truevoice https://truevoice-mcp.kushagragolash.dev/api/mcp"
                     onclick="copyText(this)"
                   >
                     <svg
@@ -559,7 +559,7 @@
                     <li>
                       Paste this URL:<br>
                       <code class="inline-code"
-                        >https://truevoice-mcp.kushagragolash.tech/api/mcp</code
+                        >https://truevoice-mcp.kushagragolash.dev/api/mcp</code
                       >
                     </li>
                   </ol>
@@ -601,7 +601,7 @@
                     <pre
                       id="server-url"
                       class="mono"
-                    ><code>https://truevoice-mcp.kushagragolash.tech/api/mcp</code></pre>
+                    ><code>https://truevoice-mcp.kushagragolash.dev/api/mcp</code></pre>
                   </div>
 
                   <div class="card code-container">
@@ -618,7 +618,7 @@
                     <pre id="mcp-config" class="mono"><code>{
   "mcpServers": {
     "truevoice": {
-      "url": "https://truevoice-mcp.kushagragolash.tech/api/mcp"
+      "url": "https://truevoice-mcp.kushagragolash.dev/api/mcp"
     }
   }
 }</code></pre>
@@ -717,7 +717,7 @@
               >Research</a
             >
             <a
-              href="https://truevoice-mcp.kushagragolash.tech/api"
+              href="https://truevoice-mcp.kushagragolash.dev/api"
               target="_blank"
               rel="noopener noreferrer"
               >API</a
@@ -726,7 +726,7 @@
           <div class="footer-credit">
             Created by
             <a
-              href="https://kushagragolash.tech"
+              href="https://kushagragolash.dev"
               target="_blank"
               rel="noopener noreferrer"
               >Kushagra Golash</a
@@ -804,7 +804,7 @@
 
       if (isOpen) {
         navigator.clipboard
-          .writeText("https://truevoice-mcp.kushagragolash.tech/api/mcp")
+          .writeText("https://truevoice-mcp.kushagragolash.dev/api/mcp")
           .then(() => {
             const label = button.querySelector(".btn-label");
             const original = label.textContent;

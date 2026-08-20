@@ -20,12 +20,12 @@ Research foundation: [arXiv:2509.19163v1](https://arxiv.org/abs/2509.19163)
 
 ### One-Click Install
 
-Visit [truevoice-mcp.kushagragolash.tech](https://truevoice-mcp.kushagragolash.tech) for one-click install buttons for Cursor, VS Code, Claude Code, and Claude Desktop.
+Visit [truevoice-mcp.kushagragolash.dev](https://truevoice-mcp.kushagragolash.dev) for one-click install buttons for Cursor, VS Code, Claude Code, and Claude Desktop.
 
 ### Claude Code
 
 ```bash
-claude mcp add --transport http truevoice https://truevoice-mcp.kushagragolash.tech/api/mcp
+claude mcp add --transport http truevoice https://truevoice-mcp.kushagragolash.dev/api/mcp
 ```
 
 ### Claude Desktop
@@ -33,7 +33,7 @@ claude mcp add --transport http truevoice https://truevoice-mcp.kushagragolash.t
 Open Settings > Connectors > Add custom server, paste:
 
 ```
-https://truevoice-mcp.kushagragolash.tech/api/mcp
+https://truevoice-mcp.kushagragolash.dev/api/mcp
 ```
 
 ### Any MCP Client
@@ -44,7 +44,7 @@ Add to your MCP configuration:
 {
   "mcpServers": {
     "truevoice": {
-      "url": "https://truevoice-mcp.kushagragolash.tech/api/mcp"
+      "url": "https://truevoice-mcp.kushagragolash.dev/api/mcp"
     }
   }
 }
@@ -270,12 +270,12 @@ then help me write a thread"
 
 ```bash
 # Check text for slop
-curl -X POST https://truevoice-mcp.kushagragolash.tech/api/check \
+curl -X POST https://truevoice-mcp.kushagragolash.dev/api/check \
   -H "Content-Type: application/json" \
   -d '{"text": "Your text here"}'
 
 # Get writing rules
-curl https://truevoice-mcp.kushagragolash.tech/api/rules?context=email
+curl https://truevoice-mcp.kushagragolash.dev/api/rules?context=email
 ```
 
 ## Research Foundation
@@ -296,7 +296,7 @@ Full paper: [arXiv:2509.19163](https://arxiv.org/abs/2509.19163)
 ## Documentation
 
 - [Claude Desktop Setup](./CLAUDE_DESKTOP_SETUP.md) - Detailed configuration guide
-- [API Reference](https://truevoice-mcp.kushagragolash.tech/api) - REST API endpoints
+- [API Reference](https://truevoice-mcp.kushagragolash.dev/api) - REST API endpoints
 - [MCP Spec](https://spec.modelcontextprotocol.io) - Protocol documentation
 
 ## Contributing
@@ -315,5 +315,5 @@ MIT License - see [LICENSE](./LICENSE) for details
 
 ---
 
-**Live Demo:** [truevoice-mcp.kushagragolash.tech](https://truevoice-mcp.kushagragolash.tech)
-**MCP Endpoint:** `https://truevoice-mcp.kushagragolash.tech/api/mcp`
+**Live Demo:** [truevoice-mcp.kushagragolash.dev](https://truevoice-mcp.kushagragolash.dev)
+**MCP Endpoint:** `https://truevoice-mcp.kushagragolash.dev/api/mcp`

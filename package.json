@@ -29,7 +29,7 @@
   "bugs": {
     "url": "https://github.com/howdoiusekeyboard/truevoice-mcp/issues"
   },
-  "homepage": "https://truevoice-mcp.kushagragolash.tech",
+  "homepage": "https://truevoice-mcp.kushagragolash.dev",
   "license": "MIT",
   "engines": {
     "node": ">=22.0.0"
